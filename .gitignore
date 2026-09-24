@@ -161,3 +161,6 @@ GitHub.sublime-settings
 # Keys and certs
 *.key
 *.crt
+
+# ALT-EDIC specific
+docs/alt-edic/*
