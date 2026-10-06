@@ -39,16 +39,6 @@ MIDDLEWARE = [
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#configuring-internal-ips
 INTERNAL_IPS = ["127.0.0.1"]
 
-if RELOAD:
-    INSTALLED_APPS = [
-        *INSTALLED_APPS,
-        "django_browser_reload",
-    ]
-    MIDDLEWARE = [
-        "django_browser_reload.middleware.BrowserReloadMiddleware",
-        *MIDDLEWARE,
-    ]
-
 # We disable all panels by default here since some of them (SQL, Template,
 # Profiling) can be very CPU intensive for this site.  However disabled panels
 # can be easily toggled on in the UI.
