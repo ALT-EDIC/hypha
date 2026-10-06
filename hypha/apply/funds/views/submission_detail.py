@@ -277,7 +277,9 @@ class SubmissionDetailPDFView(SingleObjectMixin, View):
                     site_settings.site_logo_default.file.url
                 )
             else:
-                context["logo"] = request.build_absolute_uri(static("images/logo.png"))
+                context["logo"] = request.build_absolute_uri(
+                    static("images/alt-edic-logo.png")
+                )
 
         context["link"] = self.request.build_absolute_uri(
             self.object.get_absolute_url()
