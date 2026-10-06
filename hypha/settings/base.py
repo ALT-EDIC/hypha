@@ -615,6 +615,13 @@ if env.str("AWS_STORAGE_BUCKET_NAME", None):
     AWS_PRIVATE_BUCKET_NAME = env.str(
         "AWS_PRIVATE_BUCKET_NAME", AWS_STORAGE_BUCKET_NAME
     )
+    # Optional S3-compatible provider settings. boto3 uses the custom endpoint
+    # for providers other than AWS; set the matching region as recommended by
+    # django-storages. Addressing style and signature version are provider-specific.
+    AWS_S3_ENDPOINT_URL = env.str("AWS_S3_ENDPOINT_URL", None)
+    AWS_S3_REGION_NAME = env.str("AWS_S3_REGION_NAME", None)
+    AWS_S3_SIGNATURE_VERSION = env.str("AWS_S3_SIGNATURE_VERSION", None)
+    AWS_S3_ADDRESSING_STYLE = env.str("AWS_S3_ADDRESSING_STYLE", None)
     AWS_S3_CUSTOM_DOMAIN = env.str("AWS_S3_CUSTOM_DOMAIN", None)
     AWS_PRIVATE_CUSTOM_DOMAIN = env.str("AWS_PRIVATE_CUSTOM_DOMAIN", None)
     AWS_QUERYSTRING_EXPIRE = env.str("AWS_QUERYSTRING_EXPIRE", None)
