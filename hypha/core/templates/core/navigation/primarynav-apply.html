@@ -21,28 +21,28 @@
 
     <!-- Menu -->
     {% primary_navigation_items request as nav_items %}
-    <ul class="flex flex-col p-4 md:flex-row md:gap-8 md:p-0" role="menubar">
+    <ul class="flex flex-col p-4 md:flex-row md:gap-7 md:p-0 font-[Jost,sans-serif]" role="menubar">
         {% for item in nav_items %}
             <li
                 role="presentation"
                 x-data="{ open: false }"
-                class="p-0.5"
+                class="relative p-0.5"
                 x-on:mouseover.away="open = false"
             >
                 {% if item.sub_items %}
-                    <a class="link-expand-x font-semibold {% if item.is_active %}link-active{% endif %}"
+                    <a class="inline-flex items-center gap-1 py-2 text-[15px] font-medium leading-6 text-[#202124] transition-colors hover:text-[#1967d2] focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-base-content {% if item.is_active %}text-[#1967d2] dark:text-primary{% endif %}"
                        href="{{ item.url }}"
                        aria-label="{% trans 'Menu Item' %}"
                        aria-haspopup="menu"
-                       aria-expanded="false"
+                       :aria-expanded="open.toString()"
                        role="menuitem"
                        @mouseover="open = true"
                        @click.prevent="open = ! open"
                     >
                         {{ item.title }}
 
-                        <span class="hidden md:inline md:align-baseline" :class="open ? '[&>svg]:translate-y-0.5': ''">
-                            {% heroicon_outline "chevron-down" aria_hidden="true" size=16 stroke_width=3 class="inline align-baseline transition-transform ms-1" %}
+                        <span class="hidden md:inline md:align-baseline" :class="open ? '[&>svg]:rotate-180': ''">
+                            {% heroicon_outline "chevron-down" aria_hidden="true" size=16 stroke_width=2 class="inline align-baseline transition-transform" %}
                         </span>
                     </a>
 
@@ -60,25 +60,20 @@
                         x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
                         x-transition:leave-end="transform opacity-0 scale-95 -translate-y-3"
                         @click.outside="open = false"
-                        class="block relative z-20 md:absolute md:shadow-xl bg-base-100 rounded-xs min-w-48 md:border-y"
+                        class="block relative z-20 mt-1 min-w-56 overflow-hidden rounded-b-lg border border-base-content/10 bg-base-100 shadow-lg md:absolute md:start-0 md:top-full md:mt-0"
                     >
                         {% for sub_item in item.sub_items %}
                             <a
                                 href="{{ sub_item.url }}"
                                 role="menuitem"
-                                class="pr-4 py-2 block font-normal hover:bg-base-200 focus-visible:outline-dashed transition-colors
-                                       {% if sub_item.is_active %}
-                                           border-l-primary bg-base-300 pl-3 border-l-4 border-r text-primary font-semibold
-                                       {% else %}
-                                           border-l md:border-r pl-4 text-base-content hover:text-primary hover:font-semibold
-                                       {% endif %}"
+                                class="block border-b border-base-content/10 px-5 py-3 text-sm font-normal leading-5 text-[#202124] transition-colors last:border-b-0 hover:text-[#1967d2] focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-[-2px] dark:text-base-content {% if sub_item.is_active %}font-medium text-[#1967d2] dark:text-primary{% endif %}"
                             >
                                 {{ sub_item.title }}
                             </a>
                         {% endfor %}
                     </div>
                 {% else %}
-                    <a class="link-expand-x font-semibold align-baseline {% if item.url == request.path %}link-active{% endif %}"
+                    <a class="inline-flex items-center py-2 text-[15px] font-medium leading-6 text-[#202124] transition-colors hover:text-[#1967d2] focus-visible:outline-dashed focus-visible:outline-2 focus-visible:outline-offset-4 dark:text-base-content {% if item.url == request.path %}text-[#1967d2] dark:text-primary{% endif %}"
                        href="{{ item.url }}"
                        role="menuitem"
                     >
