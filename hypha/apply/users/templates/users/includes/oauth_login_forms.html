@@ -18,3 +18,11 @@
         {% endif %}
     </form>
 {% endif %}
+{% if OIDC_OAUTH2 %}
+    <form id="oidc-oauth2-login-form" method="post" action="{% url "social:begin" "oidc" %}">
+        {% csrf_token %}
+        {% if redirect_url %}
+            <input type="hidden" name="next" value="{{ redirect_url }}">
+        {% endif %}
+    </form>
+{% endif %}
