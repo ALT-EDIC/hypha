@@ -6,5 +6,5 @@
     form="oidc-oauth2-login-form"
 >
     {% heroicon_mini "key" size=18 class="opacity-80" aria_hidden=true %}
-    {% trans "Log in with ALT-EDIC" %}
+    {% blocktrans with OIDC_OAUTH2_SERVICE_NAME as service_name %}Log in with {{ service_name }}{% endblocktrans %}
 </button>

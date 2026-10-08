@@ -17,6 +17,7 @@ def global_vars(request):
         "GOOGLE_OAUTH2": settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
         "OKTA_OAUTH2": settings.SOCIAL_AUTH_OKTA_OAUTH2_KEY,
         "OIDC_OAUTH2": settings.SOCIAL_AUTH_OIDC_KEY,
+        "OIDC_OAUTH2_SERVICE_NAME": settings.SOCIAL_AUTH_OIDC_SERVICE_NAME,
         "ENABLE_PUBLIC_SIGNUP": settings.ENABLE_PUBLIC_SIGNUP,
         "PASSKEYS_ENABLED": passkeys_enabled(),
         "SENTRY_TRACES_SAMPLE_RATE": settings.SENTRY_TRACES_SAMPLE_RATE,
