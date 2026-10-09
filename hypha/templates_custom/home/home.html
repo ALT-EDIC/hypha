@@ -6,14 +6,16 @@
 {% block meta_description %}{{ settings.core.SystemSettings.home_strapline|striptags|truncatechars:200 }}{% endblock %}
 
 {% block content %}
-    <div class="py-10 container-constrained gradient-fill">
-        <h1 class="font-bold text-h00">
-            {{ settings.core.SystemSettings.home_title}}
-        </h1>
+    <div class="gradient-fill">
+        <div class="py-10 container-constrained">
+            <h1 class="font-bold text-h00">
+                {{ settings.core.SystemSettings.home_title}}
+            </h1>
 
-        {% if settings.core.SystemSettings.home_strapline %}
-            <div class="mb-8 text-fg-muted text-pretty prose prose-a:text-primary">{{ settings.core.SystemSettings.home_strapline|nh3|safe }}</div>
-        {% endif %}
+            {% if settings.core.SystemSettings.home_strapline %}
+                <div class="mb-8 text-fg-muted text-pretty prose prose-a:text-primary">{{ settings.core.SystemSettings.home_strapline|nh3|safe }}</div>
+            {% endif %}
+        </div>
     </div>
     <div class="my-8 mx-auto max-w-3xl">
         {% if funds %}
