@@ -8,12 +8,12 @@
 {% block content %}
     <div class="gradient-fill">
         <div class="py-10 container-constrained">
-            <h1 class="font-bold text-h00">
+            <h1 class="font-bold text-h00 text-white">
                 {{ settings.core.SystemSettings.home_title}}
             </h1>
 
             {% if settings.core.SystemSettings.home_strapline %}
-                <div class="mb-8 text-fg-muted text-pretty prose prose-a:text-primary">{{ settings.core.SystemSettings.home_strapline|nh3|safe }}</div>
+                <div class="mb-8 text-fg-muted text-pretty prose prose-a:text-primary text-white">{{ settings.core.SystemSettings.home_strapline|nh3|safe }}</div>
             {% endif %}
         </div>
     </div>
