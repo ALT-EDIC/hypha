@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n static wagtailcore_tags wagtailimages_tags heroicons %}<!doctype html>
+
+{% block header %}
+    <header
+        class="flex my-10 gap-4 justify-between items-center py-2 mx-auto w-full header container-constrained"
+        x-data="{'showDesktopMenu': false, isDesktop: false, mm: null}"
+        x-init="mm = window.matchMedia(`(min-width: 1024px)`); isDesktop = mm.matches; mm.addListener((e) => { isDesktop = e.matches }); "
+    >
+        <a
+            class="py-2 px-0.5"
+            href="{{ settings.core.SystemSettings.site_logo_link|default:"/" }}"
+        >
+            {% include 'includes/header-logo.html' %}
+        </a>
+
+        {% block header_menu %}
+            {% include "core/navigation/primarynav-apply.html" %}
+        {% endblock %}
+
+        {% block user_menu %}
+            <div class="flex gap-2 print-hidden">
+
+                {% if request.user.is_authenticated and request.user.is_apply_staff %}
+                    {% include "includes/menu-notifications.html" %}
+                {% endif %}
+
+                {% if request.path != '/auth/' and request.path != '/login/' %}
+                    {% include "users/includes/user_menu.html" %}
+                {% endif %}
+
+                <button
+                    class="lg:hidden btn btn-soft btn-square btn-secondary"
+                    @click="showDesktopMenu = !showDesktopMenu"
+                >
+                    <span class="sr-only">{% trans "Menu" %}</span>
+                    {% heroicon_outline "bars-3" aria_hidden="true" class="inline align-bottom" %}
+                </button>
+            </div>
+        {% endblock user_menu %}
+    </header>
+{% endblock header %}
+
+{% block footer %}
+    <footer>
+        <div class="text-neutral-content">
+            <div class="container-constrained">
+                <img class="my-10 hidden md:block print:block" width="420" height="70" src="{% static 'images/logo-white.png' %}" alt="{% trans 'ALT-EDIC logo' %}" />
+                <img class="my-5 md:hidden print:hidden" width="215" height="40" src="{% static 'images/logo-white.png' %}" alt="{% trans 'ALT-EDIC logo' %}" />
+                <div class="flex flex-col gap-8 justify-between my-8 md:flex-row md:divide-x">
+                    <div class="flex-1 no-end-border">
+                        <div>
+                            <p>{% trans "Call us" %}</p>
+                            <p>{% heroicon_mini "phone" size=14 class="opacity-80 inline" aria_hidden=true %}<a href="tel:+33364924355">+33 3 64 92 43 55</p>
+                        </div>
+                        <div class="my-5">
+                            <address><p>1 place Aristide Briand<br />02600 Villers-Cotterêts, France</p></address>
+                            <p><a href="mailto:contact@alt-edic.eu">contact@alt-edic.eu</a></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-2 md:ps-8">
+                        <ul class="flex flex-col md:gap-4 md:p-0" role="menubar">
+                            <li class="p-0.5"><a href="https://www.alt-edic.eu/legal-notices/">{% trans "Legal Notices" %}</a></li>
+                            <li class="p-0.5"><a href="https://www.alt-edic.eu/privacy-policy/">{% trans "Privacy Policy" %}</a></li>
+                            <li class="p-0.5"><a href="https://www.alt-edic.eu/accessibility/">{% trans "Accessibility" %}</a></li>
+                            <li class="p-0.5"><a href="https://www.alt-edic.eu/site-map/">{% trans "Site Map" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="text-neutral-content">
+            <div class="items-center py-4 footer container-constrained sm:footer-horizontal">
+                <aside class="gap-1">
+                    {% if ORG_SHORT_NAME %}
+                        <span class="text-fg-muted">&COPY; {% now "Y" %} {{ ORG_SHORT_NAME }}. {% trans "All rights reserved" %}.</span>
+                    {% endif %}
+                    <span class="text-fg-muted">
+                        {% translate "Built with" %} <a href="https://docs.hypha.app" class="font-semibold hover:underline text-fg-muted hover:text-neutral-300">Hypha</a>
+                    </span>
+                </aside>
+
+                <div class="grid-flow-col gap-4 items-center md:justify-self-end md:place-self-center">
+                    {% if settings.cookieconsent.CookieConsentSettings.cookieconsent_active %}
+                        <button onclick="openConsentPrompt()" class="text-neutral-400 link link-hover">{% trans "Manage cookies" %}</button>
+                    {% endif %}
+
+                    {% if LANGUAGE_SWITCHER %}
+                        <div>
+                            {% include "includes/language-switcher.html" %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock footer %}

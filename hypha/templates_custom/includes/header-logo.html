@@ -1,0 +1,4 @@
+{% load i18n static wagtailimages_tags %}
+
+<img class="hidden min-[40rem]:max-[64rem]:block min-[64rem]:max-[80rem]:hidden xl:block print:block header__logo header__logo--desktop" width="215" height="40" src="{% static 'images/logo.png' %}" alt="{% trans 'ALT-EDIC logo' %}" />
+<img class="block min-[40rem]:max-[64rem]:hidden min-[64rem]:max-[80rem]:block xl:hidden print:hidden header__logo header__logo--mobile" width="60" height="60" src="{% static 'images/logo-small.png' %}" alt="{% trans 'ALT-EDIC logo' %}" />

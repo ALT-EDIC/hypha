@@ -1,0 +1,75 @@
+<style>
+    :root {
+        --color-brand: oklch(0.3675 0.1006 248.69);
+        --radius-box: 12px;
+        --radius-field: 8px;
+        --container-7xl: 85rem;
+        --container-8xl: 135rem;
+        --font-sans: "Lato", Sans-serif;
+    }
+    footer {
+        background-image: linear-gradient(180deg, var(--color-brand) 0%, var(--color-brand-60) 100%);
+    }
+    .footer {
+        border-width: 1px 0px 0px 0px;
+        border-color: #FFFFFF1A;
+    }
+    .header {
+        max-width: var(--container-8xl);
+    }
+    .gradient-fill {
+        background-image: linear-gradient(20deg, var(--color-brand) 35%, var(--color-brand-60) 60%);
+    }
+    .text-white {
+        color: #FFFFFF;
+    }
+    article.list-row {
+        background-color: var(--color-gray-200);
+    }
+    .btn-primary {
+        background-image: linear-gradient(25deg, var(--color-brand) 0%, var(--color-brand-60) 75%);
+    }
+    .btn-primary::after {
+        content: "";
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        background-color: var(--color-primary-content);
+        -webkit-mask: url("data:image/svg+xml,{% include 'includes/button_arrow.svg' %}") center / contain no-repeat;
+        mask: url("data:image/svg+xml,{% include 'includes/button_arrow.svg' %}") center / contain no-repeat;
+    }
+    .btn-primary:hover {
+        background: #FFFFFF;
+        color: var(--color-brand);
+    }
+    .btn-primary:hover::after {
+        background-color: var(--color-brand);
+    }
+    .no-grid {
+        display: inline-block;
+    }
+    .no-grid .prose {
+        margin-bottom: 20px;
+    }
+    .btn {
+        box-shadow: none;
+    }
+    .sm\:btn-ultrawide {
+        width: 100%;
+        max-width: 18rem;
+    }
+    .no-end-border {
+        border-inline-end-width: 0;
+    }
+    .my-10 {
+        margin-block: calc(var(--spacing) * 10);
+    }
+    .link-expand-x::after {
+        border-bottom: 0;
+    }
+    @media (min-width: 48rem) {
+        .flex-2 {
+            width: 25%;
+        }
+    }
+</style>

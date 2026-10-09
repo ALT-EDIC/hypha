@@ -116,7 +116,7 @@ urlpatterns += [
     path("", include(wagtail_urls)),
 ]
 
-if settings.DEBUG:
+if settings.DEBUGTOOLBAR:
     import debug_toolbar
 
     urlpatterns = [
