@@ -46,14 +46,14 @@
 {% block footer %}
     <footer>
         {% if settings.core.SystemSettings.footer_content %}
-            <div class="bg-base-300 text-base-content">
+            <div class="text-base-content">
                 <div class="py-10 container-constrained">
                     {{ settings.core.SystemSettings.footer_content|safe }}
                 </div>
             </div>
         {% endif %}
 
-        <div class="bg-neutral text-neutral-content">
+        <div class="text-neutral-content">
             <div class="items-center py-4 footer container-constrained sm:footer-horizontal">
                 <aside class="gap-1">
                     {% if ORG_LONG_NAME %}
