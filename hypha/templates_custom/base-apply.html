@@ -56,8 +56,8 @@
         <div class="text-neutral-content">
             <div class="items-center py-4 footer container-constrained sm:footer-horizontal">
                 <aside class="gap-1">
-                    {% if ORG_LONG_NAME %}
-                        <span class="text-fg-muted">{% translate "Copyright" %} &COPY; {{ ORG_LONG_NAME }}</span>
+                    {% if ORG_SHORT_NAME %}
+                        <span class="text-fg-muted">&COPY; {% now "Y" %} {{ ORG_SHORT_NAME }}. {% trans "All rights reserved" %}.</span>
                     {% endif %}
                     <span class="text-neutral-400">
                         {% translate "Built with" %} <a href="https://docs.hypha.app" class="font-semibold hover:underline text-neutral-400 hover:text-neutral-300">Hypha</a>
