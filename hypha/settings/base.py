@@ -481,6 +481,7 @@ SOCIAL_AUTH_OIDC_KEY = env.str("SOCIAL_AUTH_OIDC_KEY", "")
 SOCIAL_AUTH_OIDC_SECRET = env.str("SOCIAL_AUTH_OIDC_SECRET", "")
 SOCIAL_AUTH_OIDC_OIDC_ENDPOINT = env.str("SOCIAL_AUTH_OIDC_OIDC_ENDPOINT", "")
 SOCIAL_AUTH_OIDC_SERVICE_NAME = env.str("SOCIAL_AUTH_OIDC_SERVICE_NAME", "OpenID Connect")
+SOCIAL_AUTH_OIDC_SUPERUSER_GROUP = env.str("SOCIAL_AUTH_OIDC_SUPERUSER_GROUP", "")
 
 SOCIAL_AUTH_URL_NAMESPACE = "social"
 SOCIAL_AUTH_LOGIN_ERROR_URL = "users:login"
@@ -496,6 +497,7 @@ SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.associate_by_email",
     "social_core.pipeline.user.create_user",
     "social_core.pipeline.social_auth.associate_user",
+    "hypha.apply.users.social_auth_pipeline.grant_superuser_privileges",
     "social_core.pipeline.social_auth.load_extra_data",
     "social_core.pipeline.user.user_details",
 )
