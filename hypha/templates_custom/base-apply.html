@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n static wagtailcore_tags wagtailimages_tags heroicons %}<!doctype html>
+
+{% block header %}
+    <header
+        class="flex gap-4 justify-between items-center py-2 mx-auto w-full header container-constrained"
+        x-data="{'showDesktopMenu': false, isDesktop: false, mm: null}"
+        x-init="mm = window.matchMedia(`(min-width: 768px)`); isDesktop = mm.matches; mm.addListener((e) => { isDesktop = e.matches }); "
+    >
+        <a
+            class="py-2 px-0.5"
+            href="{{ settings.core.SystemSettings.site_logo_link|default:"/" }}"
+        >
+            {% include 'includes/header-logo.html' %}
+        </a>
+
+        {% block header_menu %}
+            {% if request.user.is_authenticated %}
+                {% include "core/navigation/primarynav-apply.html" %}
+            {% endif %}
+        {% endblock %}
+
+        {% block user_menu %}
+            <div class="flex gap-2 print-hidden">
+
+                {% if request.user.is_authenticated and request.user.is_apply_staff %}
+                    {% include "includes/menu-notifications.html" %}
+                {% endif %}
+
+                {% if request.path != '/auth/' and request.path != '/login/' %}
+                    {% include "users/includes/user_menu.html" %}
+                {% endif %}
+
+                <button
+                    class="md:hidden btn btn-soft btn-square btn-secondary"
+                    @click="showDesktopMenu = true"
+                >
+                    <span class="sr-only">{% trans "Menu" %}</span>
+                    {% heroicon_outline "bars-3" aria_hidden="true" class="inline align-bottom" %}
+                </button>
+            </div>
+        {% endblock user_menu %}
+    </header>
+{% endblock header %}
+
+{% block footer %}
+    <footer>
+        {% if settings.core.SystemSettings.footer_content %}
+            <div class="bg-base-300 text-base-content">
+                <div class="py-10 container-constrained">
+                    {{ settings.core.SystemSettings.footer_content|safe }}
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="bg-neutral text-neutral-content">
+            <div class="items-center py-4 footer container-constrained sm:footer-horizontal">
+                <aside class="gap-1">
+                    {% if ORG_LONG_NAME %}
+                        <span class="text-fg-muted">{% translate "Copyright" %} &COPY; {{ ORG_LONG_NAME }}</span>
+                    {% endif %}
+                    <span class="text-neutral-400">
+                        {% translate "Built with" %} <a href="https://docs.hypha.app" class="font-semibold hover:underline text-neutral-400 hover:text-neutral-300">Hypha</a>
+                    </span>
+                </aside>
+
+                <div class="grid-flow-col gap-4 items-center md:justify-self-end md:place-self-center">
+                    {% if settings.cookieconsent.CookieConsentSettings.cookieconsent_active %}
+                        <button onclick="openConsentPrompt()" class="text-neutral-400 link link-hover">{% trans "Manage cookies" %}</button>
+                    {% endif %}
+
+                    {% if LANGUAGE_SWITCHER %}
+                        <div>
+                            {% include "includes/language-switcher.html" %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock footer %}
