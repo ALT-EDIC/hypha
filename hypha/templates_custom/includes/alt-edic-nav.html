@@ -56,7 +56,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            <a class="link-expand-x font-semibold align-baseline"
+            <a class="link-expand-x font-semibold align-baseline {% if item.active %}link-active{% endif %}"
                href="{{ item.url }}"
                role="menuitem"
             >

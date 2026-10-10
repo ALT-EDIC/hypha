@@ -17,6 +17,8 @@
         {% block header_menu %}
             {% if request.user.is_authenticated %}
                 {% include "core/navigation/primarynav-apply.html" %}
+            {% else %}
+                {% include "core/navigation/primarynav-unauth.html" %}
             {% endif %}
         {% endblock %}
 
