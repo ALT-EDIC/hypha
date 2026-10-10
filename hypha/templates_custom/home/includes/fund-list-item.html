@@ -2,7 +2,7 @@
 
 <article class="md:py-6 list-row no-grid hover:bg-base-200/60">
   <div class="list-col-grow">
-    <h2 class="mb-2 font-bold text-h2">{{ page.title }}</a>
+    <h2 class="mb-2 text-h2">{{ page.title }}</a>
     </h2>
     {% if page.next_deadline and page.show_deadline %}
       <p class="badge badge-info badge-soft badge-md">
@@ -24,7 +24,7 @@
       title="{% blocktrans with title=page.title %}Click to apply for {{ title }}{% endblocktrans %}"
     >
       {% blocktrans with title=page.title %}Click to apply for {{ title }}{% endblocktrans %}
-      {% heroicon_micro 'arrow-up-right' class='size-4' aria_hidden=true %}
+      {% heroicon_outline 'arrow-up-right' stroke_width=1 size=20 aria_hidden=true %}
     </a>
   </div>
 </article>
