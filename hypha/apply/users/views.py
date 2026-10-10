@@ -40,6 +40,7 @@ from django_otp import devices_for_user
 from django_ratelimit.decorators import ratelimit
 from formtools.wizard.forms import ManagementForm as WizardManagementForm
 from hijack.views import AcquireUserView
+from social_core.exceptions import AuthException
 from social_django.utils import psa
 from social_django.views import complete
 from two_factor.forms import AuthenticationTokenForm, BackupTokenForm
@@ -921,7 +922,10 @@ def oauth_complete(
     Returns:
         A `HttpResponseRedirect` to bring the user to a landing page or the `next` URL.
     """
-    redirect = complete(request, backend, *args, **kwargs)
+    try:
+        redirect = complete(request, backend, *args, **kwargs)
+    except AuthException:
+        return HttpResponseRedirect("/")
 
     request.backend.strategy.request.session.set_expiry(
         settings.SESSION_COOKIE_AGE_LONG
