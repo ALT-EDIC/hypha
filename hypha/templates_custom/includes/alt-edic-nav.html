@@ -1,0 +1,65 @@
+{% for item in ALT_EDIC_NAVIGATION %}
+    <li
+        role="presentation"
+        x-data="{ open: false }"
+        class="p-0.5"
+        x-on:mouseover.away="open = false"
+    >
+        {% if item.sub_items %}
+            <a class="link-expand-x font-semibold"
+               href="{{ item.url }}"
+               aria-label="{% trans 'Menu Item' %}"
+               aria-haspopup="menu"
+               aria-expanded="false"
+               role="menuitem"
+               @mouseover="open = true"
+               @click.prevent="open = ! open"
+            >
+                {{ item.title }}
+
+                <span class="hidden md:inline md:align-baseline" :class="open ? '[&>svg]:translate-y-0.5': ''">
+                    {% heroicon_outline "chevron-down" aria_hidden="true" size=16 stroke_width=1 class="inline align-baseline transition-transform ms-1" %}
+                </span>
+            </a>
+
+            <!-- Submenu -->
+            <div
+                role="presentation"
+                x-cloak
+                x-trap.noautofocus="open"
+                x-on:keydown.escape="open = false"
+                x-show="open || !isDesktop"
+                x-transition:enter="transition ease-out duration-250"
+                x-transition:enter-start="transform opacity-0 scale-95 -translate-y-3"
+                x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-75"
+                x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
+                x-transition:leave-end="transform opacity-0 scale-95 -translate-y-3"
+                @click.outside="open = false"
+                class="block relative z-20 md:absolute md:shadow-xl bg-base-100 rounded-xs min-w-48 md:border-y"
+            >
+                {% for sub_item in item.sub_items %}
+                    <a
+                        href="{{ sub_item.url }}"
+                        role="menuitem"
+                        class="pr-4 py-2 block font-normal hover:bg-base-200 focus-visible:outline-dashed transition-colors
+                               {% if sub_item.is_active %}
+                                   border-l-primary bg-base-300 pl-3 border-l-4 border-r text-primary font-semibold
+                               {% else %}
+                                   border-l md:border-r pl-4 text-base-content hover:text-primary hover:font-semibold
+                               {% endif %}"
+                    >
+                        {{ sub_item.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <a class="link-expand-x font-semibold align-baseline"
+               href="{{ item.url }}"
+               role="menuitem"
+            >
+                {{ item.title }}
+            </a>
+        {% endif %}
+    </li>
+{% endfor %}

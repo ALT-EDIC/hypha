@@ -1,0 +1,92 @@
+{% load i18n apply_tags heroicons %}
+
+<nav
+    aria-label="{% trans 'Primary' %}"
+    x-show="showDesktopMenu || isDesktop"
+    x-transition:enter="transition ease-out duration-250"
+    x-transition:enter-start="transform opacity-0 translate-x-full"
+    x-transition:enter-end="transform opacity-100 translate-x-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="transform opacity-100 translate-x-0"
+    x-transition:leave-end="transform opacity-0 translate-x-full"
+    class="overflow-y-auto fixed top-0 bottom-0 z-20 pt-10 shadow-xl md:static md:top-auto md:z-auto md:pt-0 md:bg-transparent md:shadow-none bg-base-100 end-0 md:overflow-clip"
+>
+    <!-- Mobile Menu Opener -->
+    <button
+        class="absolute top-6 z-30 p-1.5 rounded-sm border transition-colors md:hidden end-4 hover:bg-base-200"
+        @click="showDesktopMenu = false"
+    >
+        {% heroicon_outline "x-mark" aria_hidden="true" size=24 stroke_width=3 class="inline" %}
+    </button>
+
+    <!-- Menu -->
+    {% primary_navigation_items request as nav_items %}
+    <ul class="flex flex-col p-4 md:flex-row md:gap-8 md:p-0" role="menubar">
+        {% include "includes/alt-edic-nav.html" %}
+        {% for item in nav_items %}
+            <li
+                role="presentation"
+                x-data="{ open: false }"
+                class="p-0.5"
+                x-on:mouseover.away="open = false"
+            >
+                {% if item.sub_items %}
+                    <a class="link-expand-x font-semibold {% if item.is_active %}link-active{% endif %}"
+                       href="{{ item.url }}"
+                       aria-label="{% trans 'Menu Item' %}"
+                       aria-haspopup="menu"
+                       aria-expanded="false"
+                       role="menuitem"
+                       @mouseover="open = true"
+                       @click.prevent="open = ! open"
+                    >
+                        {{ item.title }}
+
+                        <span class="hidden md:inline md:align-baseline" :class="open ? '[&>svg]:translate-y-0.5': ''">
+                            {% heroicon_outline "chevron-down" aria_hidden="true" size=16 stroke_width=3 class="inline align-baseline transition-transform ms-1" %}
+                        </span>
+                    </a>
+
+                    <!-- Submenu -->
+                    <div
+                        role="presentation"
+                        x-cloak
+                        x-trap.noautofocus="open"
+                        x-on:keydown.escape="open = false"
+                        x-show="open || !isDesktop"
+                        x-transition:enter="transition ease-out duration-250"
+                        x-transition:enter-start="transform opacity-0 scale-95 -translate-y-3"
+                        x-transition:enter-end="transform opacity-100 scale-100 translate-y-0"
+                        x-transition:leave="transition ease-in duration-75"
+                        x-transition:leave-start="transform opacity-100 scale-100 translate-y-0"
+                        x-transition:leave-end="transform opacity-0 scale-95 -translate-y-3"
+                        @click.outside="open = false"
+                        class="block relative z-20 md:absolute md:shadow-xl bg-base-100 rounded-xs min-w-48 md:border-y"
+                    >
+                        {% for sub_item in item.sub_items %}
+                            <a
+                                href="{{ sub_item.url }}"
+                                role="menuitem"
+                                class="pr-4 py-2 block font-normal hover:bg-base-200 focus-visible:outline-dashed transition-colors
+                                       {% if sub_item.is_active %}
+                                           border-l-primary bg-base-300 pl-3 border-l-4 border-r text-primary font-semibold
+                                       {% else %}
+                                           border-l md:border-r pl-4 text-base-content hover:text-primary hover:font-semibold
+                                       {% endif %}"
+                            >
+                                {{ sub_item.title }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <a class="link-expand-x font-semibold align-baseline {% if item.url == request.path %}link-active{% endif %}"
+                       href="{{ item.url }}"
+                       role="menuitem"
+                    >
+                        {{ item.title }}
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</nav>
