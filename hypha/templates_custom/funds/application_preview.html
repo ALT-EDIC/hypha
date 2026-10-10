@@ -1,0 +1,72 @@
+{% extends "base-apply.html" %}
+{% load wagtailcore_tags static i18n util_tags heroicons %}
+{% block title %}{% trans "Previewing" %}: {{object.title }}{% endblock %}
+
+{% block hero %}
+    <c-hero>
+        <c-hero.header title="{% trans 'Previewing' %}: {{ object.title }}" />
+    </c-hero>
+{% endblock %}
+
+{% block content %}
+    <div class="my-4 mx-auto max-w-4xl">
+
+        {% include "funds/includes/rendered_answers.html" with preview=True %}
+
+        <form
+            id="preview-form-submit"
+            class="form application-form"
+            action="{% url 'funds:submissions:edit' object.id %}"
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate
+        >
+            {% csrf_token %}
+
+            {# Hidden form fields to allow for POSTing to funds:submissions:edit on submit/edit #}
+            <div hidden>
+                {% for field in form %}
+                    {% if field.field %}
+                        {% if field.field.multi_input_field %}
+                            {% include "forms/includes/multi_input_field.html" %}
+                        {% else %}
+                            {% include "forms/includes/field.html" %}
+                        {% endif %}
+                    {% else %}
+                        <div class="max-w-none field-block prose">
+                            <div>
+                                {{ field.block }}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+                {# Hidden fields needed e.g. for django-file-form. See `StreamBaseForm.hidden_fields` #}
+                {% for hidden_field in form.hidden_fields %}
+                    {{ hidden_field }}
+                {% endfor %}
+            </div>
+
+            <div class="mt-4 card-actions">
+                {# Submit button - uses form="preview-form-submit" #}
+                <button
+                    class="w-full sm:w-auto btn btn-primary"
+                    form="preview-form-submit"
+                    name="submit"
+                    type="submit"
+                    :disabled="isFormSubmitting"
+                >
+                    {% heroicon_outline 'arrow-up-right' stroke_width=2 size=20 aria_hidden=true %}
+                    {% trans "Submit for review" %}
+                </button>
+
+                <a
+                    class="w-full sm:w-auto btn btn-secondary btn-outline"
+                    href="{% url 'funds:submissions:edit' object.id %}"
+                >
+                    {% trans "Continue editing" %}
+                </a>
+            </div>
+        </form>
+    </div>
+{% endblock %}
