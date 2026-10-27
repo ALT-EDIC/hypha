@@ -96,7 +96,7 @@
 {% else %}
     <a
         class="btn md:w-auto btn-square group md:px-[var(--btn-p)] md:btn-outline md:btn-secondary"
-        href="{% url 'users:login' %}{% if redirect_url %}?next={{ redirect_url }}{% endif %}"
+        href="{% url 'users:passwordless_login_signup' %}{% if redirect_url %}?next={{ redirect_url }}{% endif %}"
     >
         {% heroicon_micro "user" class="hidden md:inline-block align-text-bottom size-4 me-1" aria_hidden=true %}
         {% heroicon_micro "user" class="md:hidden w-6 h-6 align-text-bottom transition-transform group-hover:scale-110" aria_hidden=true %}
