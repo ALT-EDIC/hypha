@@ -48,7 +48,8 @@ WEBAUTHN_RP_ID = env.str("WEBAUTHN_RP_ID", None)
 WEBAUTHN_ORIGIN = env.str("WEBAUTHN_ORIGIN", None)
 WEBAUTHN_RP_NAME = env.str("WEBAUTHN_RP_NAME", None)
 
-# Set the allowed file extension for all uploads fields.
+# Set the allowed file extension for all uploads fields. The file inputs
+# "accept" attribute and help text are derived from this list.
 FILE_ALLOWED_EXTENSIONS = [
     "doc",
     "docx",
@@ -63,7 +64,6 @@ FILE_ALLOWED_EXTENSIONS = [
     "xls",
     "xlsx",
 ]
-FILE_ACCEPT_ATTR_VALUE = ", ".join(["." + ext for ext in FILE_ALLOWED_EXTENSIONS])
 
 # Make it possible for staff to anonymise users and applications.
 SUBMISSION_ANONYMIZATION_ENABLED = env.bool("SUBMISSION_ANONYMIZATION_ENABLED", False)
@@ -293,9 +293,6 @@ ENABLE_PUBLIC_SIGNUP = env.bool("ENABLE_PUBLIC_SIGNUP", True)
 # with ENABLE_PUBLIC_SIGNUP
 # @deprecated: This setting is deprecated and will be removed in a future release.
 FORCE_LOGIN_FOR_APPLICATION = env.bool("FORCE_LOGIN_FOR_APPLICATION", True)
-
-# Seconds to enter password on password page while email change/2FA change (default 120, 2 minutes).
-PASSWORD_PAGE_TIMEOUT = env.int("PASSWORD_PAGE_TIMEOUT", 120)
 
 #  Template engines and options to be used with Django.
 TEMPLATES = [
