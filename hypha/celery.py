@@ -9,4 +9,11 @@ app = Celery("hypha")
 django.setup()
 
 app.config_from_object(settings, namespace="CELERY")
-app.autodiscover_tasks(["django_slack", "hypha.apply.activity"])
+app.autodiscover_tasks(
+    [
+        "django_slack",
+        "hypha.apply.activity",
+        "hypha.apply.funds",
+        "hypha.apply.projects",
+    ]
+)
