@@ -45,6 +45,16 @@
     .btn-primary:hover::after {
         background-color: var(--color-brand);
     }
+    .btn-primary:disabled,
+    .btn-primary:disabled:hover,
+    .btn-primary[disabled],
+    .btn-primary[disabled]:hover {
+        background-color: color-mix(in oklab, var(--color-base-300) 90%, var(--color-base-content));
+        background-image: none;
+        color: var(--color-primary-content);
+        opacity: 1;
+        cursor: not-allowed;
+    }
     .no-grid {
         display: inline-block;
     }
