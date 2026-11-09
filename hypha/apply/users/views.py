@@ -1027,8 +1027,6 @@ def set_timezone_view(request: HttpRequest) -> HttpResponse:
     if get_zoneinfo(tz_name):
         request.session["user_timezone"] = tz_name
     return HttpResponse(status=204)
-
-
 @never_cache
 @csrf_exempt
 @psa(f"{settings.SOCIAL_AUTH_URL_NAMESPACE}:complete")
@@ -1051,10 +1049,10 @@ def oauth_complete(
     try:
         redirect = complete(request, backend, *args, **kwargs)
     except AuthException:
-        return HttpResponseRedirect("/")
+        return HttpResponseRedirect(reverse(settings.SOCIAL_AUTH_LOGIN_ERROR_URL))
 
     request.backend.strategy.request.session.set_expiry(
-        settings.SESSION_COOKIE_AGE_LONG
+        settings.SOCIAL_AUTH_MAX_SESSION_LENGTH
     )
 
     return redirect

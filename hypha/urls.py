@@ -2,6 +2,7 @@ import djp
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path, re_path
+from social_django import urls as social_auth_urls
 from two_factor.urls import urlpatterns as tf_urls
 from two_factor.views import LoginView
 from wagtail import urls as wagtail_urls
@@ -18,6 +19,13 @@ from hypha.home.views import home
 
 from .api import urls as api_urls
 from .health import health
+
+social_auth_urlpatterns = [
+    path("complete/<str:backend>/", oauth_complete, name="complete")
+    if pattern.name == "complete"
+    else pattern
+    for pattern in social_auth_urls.urlpatterns
+]
 
 urlpatterns = [
     path("", home, name="home"),
@@ -39,9 +47,12 @@ urlpatterns = [
     path("dashboard/", include(dashboard_urls)),
     path("sitemap.xml", sitemap),
     path("upload/", include("django_file_form.tus.urls")),
-    # path("complete/<str:backend>/", oauth_complete, name=f"{settings.SOCIAL_AUTH_URL_NAMESPACE}:complete"),
     path(
-        "", include("social_django.urls", namespace=settings.SOCIAL_AUTH_URL_NAMESPACE)
+        "",
+        include(
+            (social_auth_urlpatterns, settings.SOCIAL_AUTH_URL_NAMESPACE),
+            namespace=settings.SOCIAL_AUTH_URL_NAMESPACE,
+        ),
     ),
     path("", include(tf_urls, "two_factor")),
     path("", include((user_urls, "users"))),
@@ -89,15 +100,6 @@ if settings.DEBUG:
         ),
         path("test500/", dj_default_views.server_error),
     ]
-
-# Override the social auth `<SOCIAL_NAMESPACE>:complete` to allow for extending the OAuth session
-urlpatterns = [
-    path(
-        "complete/<str:backend>/",
-        oauth_complete,
-        name=f"{settings.SOCIAL_AUTH_URL_NAMESPACE}:complete",
-    )
-] + urlpatterns
 
 urlpatterns += [
     re_path(
