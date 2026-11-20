@@ -1,10 +1,8 @@
 from django.urls import include, path
 from django.views.generic import RedirectView
 
-from hypha.apply.projects.views.project import (
-    ProjectSOWEditView,
-    project_detail_redirect,
-)
+from hypha.apply.projects.views.project import project_detail_redirect
+from hypha.apply.projects.views.project_forms import ProjectSOWEditView
 
 from .reports.views import ReportDateAddView, ReportFrequencyUpdate
 from .views import (
@@ -328,57 +326,6 @@ urlpatterns = [
                                 partial_get_pf_status,
                                 name="partial-pf-status",
                             )
-                        ]
-                    ),
-                ),
-                path(
-                    "invoices/<int:invoice_pk>/",
-                    include(
-                        [
-                            path("", InvoiceView.as_view(), name="invoice-detail"),
-                            path(
-                                "edit/", EditInvoiceView.as_view(), name="invoice-edit"
-                            ),
-                            path(
-                                "update/",
-                                ChangeInvoiceStatusView.as_view(),
-                                name="invoice-update",
-                            ),
-                            path(
-                                "delete/",
-                                DeleteInvoiceView.as_view(),
-                                name="invoice-delete",
-                            ),
-                            path(
-                                "partial/status/",
-                                partial_get_invoice_status,
-                                name="partial-invoice-status",
-                            ),
-                            path(
-                                "actions/",
-                                partial_get_invoice_detail_actions,
-                                name="partial-invoice-detail-actions",
-                            ),
-                            path(
-                                "tags/",
-                                TagInvoiceView.as_view(),
-                                name="invoice-tags",
-                            ),
-                            path(
-                                "partial/tags/",
-                                partial_get_invoice_tags,
-                                name="partial-invoice-tags",
-                            ),
-                            path(
-                                "documents/invoice/",
-                                InvoicePrivateMedia.as_view(),
-                                name="invoice-document",
-                            ),
-                            path(
-                                "documents/supporting/<int:file_pk>/",
-                                InvoicePrivateMedia.as_view(),
-                                name="invoice-supporting-document",
-                            ),
                         ]
                     ),
                 ),
