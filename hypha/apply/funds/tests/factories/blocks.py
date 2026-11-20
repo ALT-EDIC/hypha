@@ -126,12 +126,18 @@ class AddressFieldBlockFactory(FormFieldBlockFactory):
         return address
 
 
+class SecondAddressFieldBlockFactory(AddressFieldBlockFactory):
+    class Meta:
+        model = blocks.SecondAddressFieldBlock
+
+
 _CUSTOM_FORM_FIELDS = {
     "duration": factory.SubFactory(DurationBlockFactory),
     "title": factory.SubFactory(TitleBlockFactory),
     "value": factory.SubFactory(ValueFieldBlockFactory),
     "email": factory.SubFactory(EmailBlockFactory),
     "address": factory.SubFactory(AddressFieldBlockFactory),
+    "second_address": factory.SubFactory(SecondAddressFieldBlockFactory),
     "full_name": factory.SubFactory(FullNameBlockFactory),
     "text_markup": factory.SubFactory(ParagraphBlockFactory),
     "rich_text": factory.SubFactory(RichTextFieldBlockFactory),

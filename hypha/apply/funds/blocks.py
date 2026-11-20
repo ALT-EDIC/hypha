@@ -184,15 +184,9 @@ class EmailBlock(ApplicationMustIncludeFieldBlock):
         icon = "mail"
 
 
-class AddressFieldBlock(ApplicationSingleIncludeFieldBlock):
-    name = "address"
+class AddressFieldBlockMixin:
     description = _("The postal address of the user")
-
     field_class = AddressField
-
-    class Meta:
-        label = _("Address")
-        icon = "home"
 
     def format_data(self, data):
         # Based on the fields listed in addressfields/widgets.py
@@ -208,6 +202,25 @@ class AddressFieldBlock(ApplicationSingleIncludeFieldBlock):
             return data
 
         return ", ".join(value for value in data.values() if value)
+
+
+class AddressFieldBlock(AddressFieldBlockMixin, ApplicationSingleIncludeFieldBlock):
+    name = "address"
+
+    class Meta:
+        label = _("Address")
+        icon = "home"
+
+
+class SecondAddressFieldBlock(
+    AddressFieldBlockMixin, ApplicationSingleIncludeFieldBlock
+):
+    name = "second_address"
+    description = _("A second postal address")
+
+    class Meta:
+        label = _("Second address")
+        icon = "home"
 
 
 class FullNameBlock(ApplicationMustIncludeFieldBlock):

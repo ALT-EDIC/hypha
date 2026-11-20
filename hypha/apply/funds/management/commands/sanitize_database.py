@@ -7,7 +7,7 @@ from faker import Faker
 
 from hypha.apply.categories.blocks import CategoryQuestionBlock
 from hypha.apply.funds.blocks import (
-    AddressFieldBlock,
+    AddressFieldBlockMixin,
     DurationBlock,
     EmailBlock,
     FullNameBlock,
@@ -97,7 +97,7 @@ class Command(BaseCommand):
                 update_data(self.f.phone_number())
             elif (
                 form_field.value["field_label"].lower() == "organization address"
-                or block_class is AddressFieldBlock
+                or issubclass(block_class, AddressFieldBlockMixin)
             ):
                 try:
                     address = json.loads(data)
