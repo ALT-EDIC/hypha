@@ -223,6 +223,25 @@ class SecondAddressFieldBlock(
         icon = "home"
 
 
+class PICFieldBlock(ApplicationSingleIncludeFieldBlock):
+    name = "pic"
+    description = _("The 9-digit Participant Identification Code")
+    field_class = forms.RegexField
+    widget = forms.TextInput(
+        attrs={"inputmode": "numeric", "pattern": "[0-9]{9}", "maxlength": 9}
+    )
+
+    def get_field_kwargs(self, struct_value):
+        kwargs = super().get_field_kwargs(struct_value)
+        kwargs["regex"] = r"^[0-9]{9}$"
+        kwargs["error_messages"] = {"invalid": _("Enter exactly 9 digits.")}
+        return kwargs
+
+    class Meta:
+        label = _("PIC")
+        icon = "tag"
+
+
 class FullNameBlock(ApplicationMustIncludeFieldBlock):
     name = "full_name"
     description = _("Full name")

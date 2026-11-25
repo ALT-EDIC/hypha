@@ -29,6 +29,9 @@
     .btn-primary {
         background-image: linear-gradient(25deg, var(--color-brand) 0%, var(--color-brand-60) 75%);
     }
+    a.btn-primary.btn-outline:not(.btn-square) {
+        --btn-rest-fg: var(--btn-fg, var(--color-base-content));
+    }
     .btn-primary::after {
         content: "";
         display: inline-block;
