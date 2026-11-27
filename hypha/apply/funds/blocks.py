@@ -223,8 +223,7 @@ class SecondAddressFieldBlock(
         icon = "home"
 
 
-class PICFieldBlock(ApplicationSingleIncludeFieldBlock):
-    name = "pic"
+class PICFieldBlockMixin:
     description = _("The 9-digit Participant Identification Code")
     field_class = forms.RegexField
     widget = forms.TextInput(
@@ -237,8 +236,21 @@ class PICFieldBlock(ApplicationSingleIncludeFieldBlock):
         kwargs["error_messages"] = {"invalid": _("Enter exactly 9 digits.")}
         return kwargs
 
+
+class PICFieldBlock(PICFieldBlockMixin, ApplicationSingleIncludeFieldBlock):
+    name = "pic"
+
     class Meta:
         label = _("PIC")
+        icon = "tag"
+
+
+class SecondPICFieldBlock(PICFieldBlockMixin, ApplicationSingleIncludeFieldBlock):
+    name = "second_pic"
+    description = _("A second 9-digit Participant Identification Code")
+
+    class Meta:
+        label = _("Second PIC")
         icon = "tag"
 
 
